@@ -82,6 +82,8 @@ jobs:
       
       - name: Conditionally Clear Code Scanning Results if JSON is Empty
         if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           FILE="scans/cgr-malcontent-analyze.json"
 
