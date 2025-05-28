@@ -8,7 +8,8 @@ sub_repo_path = "malcontent-samples/python/2024.ultralytics/v8.3.41"
 output_path = Path("scans/malcontent-report.sarif")
 
 # === DETERMINE LOCAL REPO ROOT ===
-local_repo_root = Path.cwd() / sub_repo_path
+repo_root = Path(__file__).resolve().parent
+local_repo_root = repo_root / sub_repo_path
 if not local_repo_root.exists():
     raise FileNotFoundError(f"Expected repo root not found: {local_repo_root}")
 
@@ -40,8 +41,7 @@ sarif = {
         },
         "versionControlProvenance": [{
             "repositoryUri": repository_uri,
-            "revisionId": commit_sha,
-            "uriBaseId": "%SRCROOT%"
+            "revisionId": commit_sha
         }],
         "results": []
     }]
@@ -87,8 +87,7 @@ for _, file_info in modified.items():
             "locations": [{
                 "physicalLocation": {
                     "artifactLocation": {
-                        "uri": str(rel_path),
-                        "uriBaseId": "%SRCROOT%"
+                        "uri": str(rel_path)
                     },
                     "region": {
                         "startLine": 1
