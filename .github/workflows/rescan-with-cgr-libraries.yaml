@@ -10,6 +10,7 @@ env:
   ULTRALYTICS_SUBDIR: "python/2024.ultralytics"
   CGR_LOCAL_REPO_DIR: "chainguard-libraries"
   CGR_ULTRALYTICS_SUBDIR: "cgr-ultralytics-8.3.47"
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   
 jobs:
   scan-python-malware:
@@ -82,8 +83,6 @@ jobs:
       
       - name: Conditionally Clear Code Scanning Results if JSON is Empty
         if: always()
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           FILE="scans/cgr-malcontent-analyze.json"
 
