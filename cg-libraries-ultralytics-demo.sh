@@ -45,8 +45,9 @@ docker run --name "$CONTAINER_NAME" -v "$FULLBASEPATH:/home/nonroot/malcontent/"
   /home/nonroot/malcontent/v8.3.40 /home/nonroot/malcontent/v8.3.41
 
 echo "[*] Extracting JSON"
-docker cp "$CONTAINER_NAME:/home/nonroot/ultralytics-malcontent-diff-v8.3.40-v8.3.41.json" .
+mkdir scans
+docker cp "$CONTAINER_NAME:/home/nonroot/ultralytics-malcontent-diff-v8.3.40-v8.3.41.json" scans/
 docker rm "$CONTAINER_NAME" > /dev/null
-echo "[*] Output saved to ultralytics-malcontent-diff-v8.3.40-v8.3.41.json"
+echo "[*] Output saved to scans/ultralytics-malcontent-diff-v8.3.40-v8.3.41.json"
 echo ""
 echo "[✔] Done"
