@@ -101,7 +101,7 @@ jobs:
               gh api \
                 -X DELETE \
                 -H "Accept: application/vnd.github+json" \
-                "/repos/${{ github.repository }}/code-scanning/analyses/$analysis_id"
+                "/repos/${{ github.repository }}/code-scanning/analyses/$analysis_id?confirm_delete=true"
             done
             echo "✔ Code scanning results cleared."
 
