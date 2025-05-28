@@ -1,0 +1,48 @@
+name: generate-sarif-malware-report
+
+on:
+  workflow_dispatch:
+
+jobs:
+  scan-python-malware:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      security-events: write
+      contents: write
+      packages: write
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.ref }}
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install --no-cache-dir --upgrade pip
+
+      - name: Run SARIF conversion
+        run: python generate-malcontent-sarif.py
+
+      - name: Upload SARIF to GitHub
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: scans/malcontent-report.sarif
+
+      - name: Commit and push updated SARIF file
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add scans/malcontent-report.sarif
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Update malware diff SARIF Report: v8.3.40 → v8.3.41"
+            git push origin "${GITHUB_REF#refs/heads/}"
