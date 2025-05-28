@@ -1,37 +1,45 @@
-name: generate-rescan-with-cgr-libraries
+name: scan-cgr-libraries
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: # Allows manual triggering
 
+env:
+  MALCONTENT_IMAGE: "cgr.dev/chainguard/malcontent@sha256:fdfca44c401a5ca98af51292a821278644895bc1963f7a76a733d76647ff0ede"
+  REPO_URL: "https://github.com/chainguard-dev/malcontent-samples.git"
+  LOCAL_REPO_DIR: "chainguard-libraries"
+  ULTRALYTICS_SUBDIR: "cgr-ultralytics-8.3.47"
+  
 jobs:
   scan-python-malware:
     runs-on: ubuntu-latest
     permissions:
       actions: read
-      security-events: write
+      security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
       contents: write
       packages: write
       id-token: write
-
     steps:
       - name: Checkout repository
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
-          ref: ${{ github.ref }}
-          fetch-depth: 0
+          ref: ${{ github.ref }} # Ensures we stay on the triggered branch
+          fetch-depth: 0         # Necessary for pushing changes
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
+      - name: 'Pull Malcontent Image'
+        run: |
+          docker pull "${{ env.MALCONTENT_IMAGE }}"
 
-      - name: Install dependencies
-        run: pip install --no-cache-dir --upgrade pip
+      
+      - name: Set up full path
+        id: paths
+        run: |
+          FULLBASEPATH="${GITHUB_WORKSPACE}/${LOCAL_REPO_DIR}/${ULTRALYTICS_SUBDIR}"
+          echo "FULLBASEPATH=$FULLBASEPATH"
+          echo "fullpath=$FULLBASEPATH" >> "$GITHUB_OUTPUT"
 
-      - name: Run SARIF conversion
-        run: python generate-malcontent-sarif.py
-
-      - name: Upload SARIF to GitHub
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: scans/malcontent-report.sarif
+      - name: Analyze Chainguard Library Python Ultralytics 
+        run: |
+          docker run --rm -v "${{ steps.paths.outputs.fullpath }}:/home/nonroot/chainguard-libraries/" \
+            "${MALCONTENT_IMAGE}" \
+            --min-risk=critical \
+            /home/nonroot/malcontent-samples/python/2024.ultralytics/v8.3.40 /home/nonroot/chainguard-libraries/cgr-ultralytics-8.3.47
