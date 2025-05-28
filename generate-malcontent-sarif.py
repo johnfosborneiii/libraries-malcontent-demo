@@ -3,9 +3,9 @@ import os
 from pathlib import Path
 
 # === CONFIGURATION ===
-input_path = "ultralytics-malcontent-diff-v8.3.40-v8.3.41.json"
+input_path = Path("scans/ultralytics-malcontent-diff-v8.3.40-v8.3.41.json")
 sub_repo_path = "malcontent-samples/python/2024.ultralytics/v8.3.41"
-output_path = "scans/malcontent-report.sarif"
+output_path = Path("scans/malcontent-report.sarif")
 
 # === DETERMINE LOCAL REPO ROOT ===
 local_repo_root = Path.cwd() / sub_repo_path
