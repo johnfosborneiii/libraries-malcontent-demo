@@ -50,4 +50,4 @@ jobs:
              -v "${{ steps.paths.outputs.fullpath }}:/home/nonroot/chainguard-libraries/" \
             "${MALCONTENT_IMAGE}" \
             --min-risk=critical \
-            /home/nonroot/malcontent-samples/python/2024.ultralytics/v8.3.40 /home/nonroot/chainguard-libraries/cgr-ultralytics-8.3.47
+            analyze /home/nonroot/chainguard-libraries/cgr-ultralytics-8.3.47
