@@ -46,7 +46,7 @@ jobs:
       - name: Analyze Chainguard Library Python Ultralytics 
         run: |
           docker run --rm \
-             -v "${{ steps.paths.outputs.fullpath }}:/home/nonroot/malcontent-samples/"
+             -v "${{ steps.paths.outputs.fullpath }}:/home/nonroot/malcontent-samples/" \
              -v "${{ steps.paths.outputs.fullpath }}:/home/nonroot/chainguard-libraries/" \
             "${MALCONTENT_IMAGE}" \
             --min-risk=critical \
