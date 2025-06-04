@@ -3,6 +3,28 @@
         "Added": {},
         "Removed": {},
         "Modified": {
+            "/home/nonroot/malcontent/v8.3.40/engine/model.py -\u003e /home/nonroot/malcontent/v8.3.41/models/yolo/model.py": {
+                "Path": "/home/nonroot/malcontent/v8.3.41/models/yolo/model.py",
+                "SHA256": "",
+                "Size": 0,
+                "Behaviors": [
+                    {
+                        "Description": "runs program from hardcoded temporary path",
+                        "MatchStrings": [
+                            "safe_run(\"/tmp/ultralytics_runner\")"
+                        ],
+                        "RiskScore": 3,
+                        "RiskLevel": "HIGH",
+                        "RuleURL": "https://github.com/chainguard-dev/malcontent/blob/main/rules/exec/program/tmpdir.yara#exec_program_tmpdir",
+                        "DiffAdded": true,
+                        "ID": "exec/program/tmpdir",
+                        "RuleName": "exec_program_tmpdir"
+                    }
+                ],
+                "PreviousPath": "/home/nonroot/malcontent/v8.3.40/engine/model.py",
+                "RiskScore": 3,
+                "RiskLevel": "HIGH"
+            },
             "/home/nonroot/malcontent/v8.3.40/utils/downloads.py -\u003e /home/nonroot/malcontent/v8.3.41/utils/downloads.py": {
                 "Path": "/home/nonroot/malcontent/v8.3.41/utils/downloads.py",
                 "SHA256": "",
