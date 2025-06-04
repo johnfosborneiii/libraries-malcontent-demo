@@ -18,8 +18,9 @@ This commit is authored by the `@UltralyticsAssistant` which strongly suggests t
 - [GitHub Commit](https://github.com/ultralytics/ultralytics/commit/cb260c243ffa3e0cc84820095cd88be2f5db86ca)
 - [GitHub Action Run](https://github.com/ultralytics/ultralytics/actions/runs/12168072999/job/33938058724)
 
-### Malicious Release Upload
-- On 2024-12-04 at 20:51, Sigstore’s transparency log recorded two attestations for the malicious release (`v8.3.41`), confirming the distributions: `ultralytics-8.3.41.tar.gz` and `ultralytics-8.3.41-py3-none-any.whl`.
+### Sigstore Attestation attestations for malicious distributions of v8.3.41 on PyPI:
+- ultralytics-8.3.41.tar.gz https://search.sigstore.dev/?logIndex=153415338
+- ultralytics-8.3.41-py3-none-any.whl https://search.sigstore.dev/?logIndex=153415340
 - The release `v8.3.41` was uploaded to PyPI with a Trusted Publisher and valid attestations for each distribution, matching the `ultralytics/ultralytics` Trusted Publisher identity.
 
 ### Branch References and Removal of Malicious Payload Files
